@@ -1,9 +1,20 @@
 package com.example.workmanagerdemo;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,12 +50,14 @@ public class SelectImageActivity extends AppCompatActivity {
         requestPermissionsIfNecessary();
 
         // Create request to get image from filesystem when button clicked
-        findViewById(R.id.selectImage).setOnClickListener(view -> {
-            Intent chooseIntent = new Intent(
-                    Intent.ACTION_PICK,
-                    MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            startActivityForResult(chooseIntent, REQUEST_CODE_IMAGE);
-        });
+        findViewById(R.id.selectImage).setOnClickListener( view -> {
+
+                Intent chooseIntent = new Intent(
+                        Intent.ACTION_PICK,
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(chooseIntent, REQUEST_CODE_IMAGE);
+            }
+        );
     }
 
     /** Save the permission request count on a rotate **/
@@ -104,6 +117,7 @@ public class SelectImageActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == Activity.RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE_IMAGE:

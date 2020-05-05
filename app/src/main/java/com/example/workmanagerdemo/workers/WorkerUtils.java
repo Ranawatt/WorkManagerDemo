@@ -1,6 +1,33 @@
 package com.example.workmanagerdemo.workers;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.content.Context;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Build;
+import android.renderscript.Allocation;
+import android.renderscript.Element;
+import android.renderscript.RenderScript;
+import android.renderscript.ScriptIntrinsicBlur;
+import android.util.Log;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.WorkerThread;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
+
+import com.example.workmanagerdemo.Constants;
+import com.example.workmanagerdemo.R;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.UUID;
+
+import static com.example.workmanagerdemo.Constants.CHANNEL_ID;
+import static com.example.workmanagerdemo.Constants.DELAY_TIME_MILLIS;
 
 final class WorkerUtils {
     private static final String TAG = WorkerUtils.class.getSimpleName();
@@ -24,7 +51,7 @@ final class WorkerUtils {
             String description = Constants.VERBOSE_NOTIFICATION_CHANNEL_DESCRIPTION;
             int importance = NotificationManager.IMPORTANCE_HIGH;
             NotificationChannel channel =
-                    new NotificationChannel(Constants.CHANNEL_ID, name, importance);
+                    new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
 
             // Add the channel
