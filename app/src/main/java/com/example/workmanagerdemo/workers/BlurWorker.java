@@ -40,7 +40,13 @@ public class BlurWorker extends Worker {
         // Makes a notification when the work starts and slows down the work so that it's easier to
         // see each WorkRequest start, even on emulated devices
         WorkerUtils.makeStatusNotification("Blurring image", applicationContext);
-        WorkerUtils.sleep();
+        int i=0;
+        while (i<100){
+            setProgressAsync(getInputData());
+            WorkerUtils.sleep();
+            i = i + 10;
+        }
+
 
         String resourceUri = getInputData().getString(Constants.KEY_IMAGE_URI);
         try {

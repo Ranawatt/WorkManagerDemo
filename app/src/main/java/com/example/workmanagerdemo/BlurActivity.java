@@ -17,6 +17,8 @@ import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
 
+import static com.example.workmanagerdemo.Constants.PROGRESS;
+
 public class BlurActivity extends AppCompatActivity {
     private BlurViewModel mViewModel;
     private ImageView mImageView;
@@ -75,7 +77,6 @@ public class BlurActivity extends AppCompatActivity {
             if (listOfWorkInfo == null || listOfWorkInfo.isEmpty()) {
                 return;
             }
-
             // We only care about the one output status.
             // Every continuation has only one worker tagged TAG_OUTPUT
             WorkInfo workInfo = listOfWorkInfo.get(0);
@@ -85,7 +86,6 @@ public class BlurActivity extends AppCompatActivity {
                 showWorkInProgress();
             } else {
                 showWorkFinished();
-
                 // Normally this processing, which is not directly related to drawing views on
                 // screen would be in the ViewModel. For simplicity we are keeping it here.
                 Data outputData = workInfo.getOutputData();
@@ -98,6 +98,18 @@ public class BlurActivity extends AppCompatActivity {
                     mViewModel.setOutputUri(outputImageUri);
                     mOutputButton.setVisibility(View.VISIBLE);
                 }
+            }
+        });
+
+        //Show Work Progress
+        mViewModel.getProgressWorkInfo().observe(this, listOfWorkInfo ->{
+            if (listOfWorkInfo == null || listOfWorkInfo.isEmpty()) {
+                return;
+            }
+            WorkInfo workInfo = listOfWorkInfo.get(0);
+            if (WorkInfo.State.RUNNING == workInfo.getState()){
+                int progress = workInfo.getProgress().getInt(PROGRESS, 0);
+                mProgressBar.setProgress(progress);
             }
         });
     }
@@ -119,6 +131,7 @@ public class BlurActivity extends AppCompatActivity {
         mProgressBar.setVisibility(View.GONE);
         mCancelButton.setVisibility(View.GONE);
         mGoButton.setVisibility(View.VISIBLE);
+        mProgressBar.setProgress(0);
     }
 
     /**

@@ -24,6 +24,7 @@ import java.util.List;
 import static com.example.workmanagerdemo.Constants.IMAGE_MANIPULATION_WORK_NAME;
 import static com.example.workmanagerdemo.Constants.KEY_IMAGE_URI;
 import static com.example.workmanagerdemo.Constants.TAG_OUTPUT;
+import static com.example.workmanagerdemo.Constants.TAG_PROGRESS;
 
 public class BlurViewModel extends AndroidViewModel {
 
@@ -31,6 +32,7 @@ public class BlurViewModel extends AndroidViewModel {
     private Uri mImageUri;
     private Uri mOutputUri;
     private LiveData<List<WorkInfo>> mSavedWorkInfo;
+    private LiveData<List<WorkInfo>> mProgressWorkInfoItem;
 
     public BlurViewModel(@NonNull Application application) {
         super(application);
@@ -39,6 +41,7 @@ public class BlurViewModel extends AndroidViewModel {
         // This transformation makes sure that whenever the current work Id changes the WorkInfo
         // the UI is listening to changes
         mSavedWorkInfo = mWorkManager.getWorkInfosByTagLiveData(TAG_OUTPUT);
+        mProgressWorkInfoItem = mWorkManager.getWorkInfosByTagLiveData(TAG_PROGRESS);
     }
 
     /**
@@ -65,6 +68,7 @@ public class BlurViewModel extends AndroidViewModel {
                 blurBuilder.setInputData(createInputDataForUri());
             }
 
+            blurBuilder.addTag(TAG_PROGRESS);
             continuation = continuation.then(blurBuilder.build());
         }
 
@@ -132,4 +136,8 @@ public class BlurViewModel extends AndroidViewModel {
     Uri getOutputUri() { return mOutputUri; }
 
     LiveData<List<WorkInfo>> getOutputWorkInfo() { return mSavedWorkInfo; }
+
+    LiveData<List<WorkInfo>> getProgressWorkInfo(){
+        return mProgressWorkInfoItem;
+    }
 }
