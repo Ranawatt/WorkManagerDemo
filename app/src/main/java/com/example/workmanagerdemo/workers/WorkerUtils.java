@@ -63,7 +63,7 @@ final class WorkerUtils {
             }
         }
 
-        // Create the notification
+        // Create the notificatiomn
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(Constants.NOTIFICATION_TITLE)

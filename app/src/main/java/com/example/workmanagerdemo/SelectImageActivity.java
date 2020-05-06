@@ -49,7 +49,7 @@ public class SelectImageActivity extends AppCompatActivity {
         // Make sure the app has correct permissions to run
         requestPermissionsIfNecessary();
 
-        // Create request to get image from filesystem when button clicked
+        // Create request to get image from filesystem when button clicked`
         findViewById(R.id.selectImage).setOnClickListener( view -> {
 
                 Intent chooseIntent = new Intent(
