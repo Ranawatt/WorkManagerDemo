@@ -14,9 +14,8 @@ import androidx.work.Worker;
 import androidx.work.WorkerParameters;
 
 import com.example.workmanagerdemo.Constants;
-
-import java.io.DataInputStream;
 import java.io.FileNotFoundException;
+import static com.example.workmanagerdemo.workers.WorkerUtils.sleep;
 
 public class BlurWorker extends Worker {
 
@@ -37,18 +36,9 @@ public class BlurWorker extends Worker {
     public Worker.Result doWork() {
 
         Context applicationContext = getApplicationContext();
-
         // Makes a notification when the work starts and slows down the work so that it's easier to
         // see each WorkRequest start, even on emulated devices
         WorkerUtils.makeStatusNotification("Blurring image", applicationContext);
-        int i=0;
-        while (i<100){
-            setProgressAsync(getInputData());
-            WorkerUtils.sleep();
-            i = i + 10;
-        }
-
-
         String resourceUri = getInputData().getString(Constants.KEY_IMAGE_URI);
         try {
             if (TextUtils.isEmpty(resourceUri)) {
@@ -72,6 +62,12 @@ public class BlurWorker extends Worker {
             Data outputData = new Data.Builder().putString(
                     Constants.KEY_IMAGE_URI, outputUri.toString()).build();
 
+            int i= 0;
+            while (i<100){
+                setProgressAsync(outputData);
+                sleep();
+                i = i + 10;
+            }
             // If there were no errors, return SUCCESS
             return Result.success(outputData);
         } catch (FileNotFoundException fileNotFoundException) {
@@ -84,5 +80,7 @@ public class BlurWorker extends Worker {
             Log.e(TAG, "Error applying blur", throwable);
             return Result.failure();
         }
+
+
     }
 }
