@@ -35,7 +35,7 @@ final class WorkerUtils {
     /**
      * Create a Notification that is shown as a heads-up notification if possible.
      *
-     * For this codelab, this is used to show a notification so that you know when different steps
+     * this is used to show a notification so that you know when different steps
      * of the background work chain are starting
      *
      * @param message Message shown on the notification

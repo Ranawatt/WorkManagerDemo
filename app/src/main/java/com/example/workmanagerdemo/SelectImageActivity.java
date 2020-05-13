@@ -102,11 +102,7 @@ public class SelectImageActivity extends AppCompatActivity {
     /** Permission Checking **/
 
     @Override
-    public void onRequestPermissionsResult(
-            int requestCode,
-            @NonNull String[] permissions,
-            @NonNull int[] grantResults) {
-
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == REQUEST_CODE_PERMISSIONS) {
             requestPermissionsIfNecessary(); // no-op if permissions are granted already.
@@ -114,7 +110,6 @@ public class SelectImageActivity extends AppCompatActivity {
     }
 
     /** Image Selection **/
-
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
