@@ -23,19 +23,14 @@ import java.util.Locale;
 public class SaveImageToFileWorker extends Worker {
     /**
      * Creates an instance of the {@link Worker}.
-     *
      * @param appContext   the application {@link Context}
      * @param workerParams the set of {@link WorkerParameters}
      */
-    public SaveImageToFileWorker(
-            @NonNull Context appContext,
-            @NonNull WorkerParameters workerParams
-    ) {
+    public SaveImageToFileWorker(@NonNull Context appContext, @NonNull WorkerParameters workerParams) {
         super(appContext, workerParams);
     }
 
     private static final String TAG = SaveImageToFileWorker.class.getSimpleName();
-
     private static final String TITLE = "Blurred Image";
     private static final SimpleDateFormat DATE_FORMATTER =
             new SimpleDateFormat("yyyy.MM.dd 'at' HH:mm:ss z", Locale.getDefault());
@@ -44,7 +39,6 @@ public class SaveImageToFileWorker extends Worker {
     @Override
     public Worker.Result doWork() {
         Context applicationContext = getApplicationContext();
-
         // Makes a notification when the work starts and slows down the work so that it's easier to
         // see each WorkRequest start, even on emulated devices
         WorkerUtils.makeStatusNotification("Saving image", applicationContext);

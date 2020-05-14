@@ -16,43 +16,34 @@ import android.widget.ProgressBar;
 import android.widget.RadioGroup;
 
 import com.bumptech.glide.Glide;
+import com.example.workmanagerdemo.databinding.ActivityBlurBinding;
 
 import static com.example.workmanagerdemo.Constants.PROGRESS;
 
 public class BlurActivity extends AppCompatActivity {
     private BlurViewModel mViewModel;
-    private ImageView mImageView;
-    private ProgressBar mProgressBar;
-    private Button mGoButton, mOutputButton, mCancelButton;
+
+    private ActivityBlurBinding binding;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_blur);
+        binding = ActivityBlurBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
         // Get the ViewModel
         mViewModel = ViewModelProviders.of(this).get(BlurViewModel.class);
-
-        // Get all of the Views
-        mImageView = findViewById(R.id.image_view);
-        mProgressBar = findViewById(R.id.progress_bar);
-        mGoButton = findViewById(R.id.go_button);
-        mOutputButton = findViewById(R.id.see_file_button);
-        mCancelButton = findViewById(R.id.cancel_button);
-
         // Image uri should be stored in the ViewModel; put it there then display
         Intent intent = getIntent();
         String imageUriExtra = intent.getStringExtra(Constants.KEY_IMAGE_URI);
         mViewModel.setImageUri(imageUriExtra);
         if (mViewModel.getImageUri() != null) {
-            Glide.with(this).load(mViewModel.getImageUri()).into(mImageView);
+            Glide.with(this).load(mViewModel.getImageUri()).into(binding.imageView);
         }
-
         // Setup blur image file button
-        mGoButton.setOnClickListener(view -> mViewModel.applyBlur(getBlurLevel()));
-
+        binding.goButton.setOnClickListener(view -> mViewModel.applyBlur(getBlurLevel()));
         // Setup view output image file button
-        mOutputButton.setOnClickListener(view -> {
+        binding.seeFileButton.setOnClickListener(view -> {
             Uri currentUri = mViewModel.getOutputUri();
             if (currentUri != null) {
                 Intent actionView = new Intent(Intent.ACTION_VIEW, currentUri);
@@ -61,14 +52,10 @@ public class BlurActivity extends AppCompatActivity {
                 }
             }
         });
-
         // Hookup the Cancel button
-        mCancelButton.setOnClickListener(view -> mViewModel.cancelWork());
-
-
+        binding.cancelButton.setOnClickListener(view -> mViewModel.cancelWork());
         // Show work status
         mViewModel.getOutputWorkInfo().observe(this, listOfWorkInfo -> {
-
             // Note that these next few lines grab a single WorkInfo if it exists
             // This code could be in a Transformation in the ViewModel; they are included here
             // so that the entire process of displaying a WorkInfo is in one location.
@@ -83,24 +70,22 @@ public class BlurActivity extends AppCompatActivity {
 
             boolean finished = workInfo.getState().isFinished();
             if (!finished) {
-                showWorkFinished();
-            } else {
                 showWorkInProgress();
+            } else {
+                showWorkFinished();
                 // Normally this processing, which is not directly related to drawing views on
                 // screen would be in the ViewModel. For simplicity we are keeping it here.
                 Data outputData = workInfo.getOutputData();
 
                 String outputImageUri =
                         outputData.getString(Constants.KEY_IMAGE_URI);
-
                 // If there is an output file show "See File" button
                 if (!TextUtils.isEmpty(outputImageUri)) {
                     mViewModel.setOutputUri(outputImageUri);
-                    mOutputButton.setVisibility(View.VISIBLE);
+                    binding.seeFileButton.setVisibility(View.VISIBLE);
                 }
             }
         });
-
         //Show Work Progress
         mViewModel.getProgressWorkInfo().observe(this, listOfWorkInfo ->{
             if (listOfWorkInfo == null || listOfWorkInfo.isEmpty()) {
@@ -109,29 +94,26 @@ public class BlurActivity extends AppCompatActivity {
             WorkInfo workInfo = listOfWorkInfo.get(0);
             if (WorkInfo.State.RUNNING == workInfo.getState()){
                 int progress = workInfo.getProgress().getInt(PROGRESS, 0);
-                mProgressBar.setProgress(progress);
+                binding.progressBar.setProgress(progress);
             }
         });
     }
-
     /**
      * Shows and hides views for when the Activity is processing an image
      */
     private void showWorkInProgress() {
-        mProgressBar.setVisibility(View.VISIBLE);
-        mCancelButton.setVisibility(View.VISIBLE);
-        mGoButton.setVisibility(View.GONE);
-        mOutputButton.setVisibility(View.GONE);
+        binding.progressBar.setVisibility(View.VISIBLE);
+        binding.cancelButton.setVisibility(View.VISIBLE);
+        binding.goButton.setVisibility(View.GONE);
+        binding.seeFileButton.setVisibility(View.GONE);
     }
-
     /**
      * Shows and hides views for when the Activity is done processing an image
      */
     private void showWorkFinished() {
-        mProgressBar.setVisibility(View.GONE);
-        mCancelButton.setVisibility(View.GONE);
-        mGoButton.setVisibility(View.VISIBLE);
-        mProgressBar.setProgress(0);
+        binding.progressBar.setVisibility(View.GONE);
+        binding.cancelButton.setVisibility(View.GONE);
+        binding.goButton.setVisibility(View.VISIBLE);
     }
 
     /**
@@ -149,7 +131,6 @@ public class BlurActivity extends AppCompatActivity {
             case R.id.radio_blur_lv_3:
                 return 3;
         }
-
         return 1;
     }
 }

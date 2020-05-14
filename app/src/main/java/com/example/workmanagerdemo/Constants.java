@@ -20,7 +20,7 @@ public final class Constants {
     public static final String KEY_IMAGE_URI = "KEY_IMAGE_URI";
     static final String TAG_OUTPUT = "OUTPUT";
 
-    public static final long DELAY_TIME_MILLIS = 3000;
+    public static final long DELAY_TIME_MILLIS = 500;
 
     public static final String PROGRESS = "PROGRESS";
     public static final String TAG_PROGRESS = "TAG_PROGRESS";

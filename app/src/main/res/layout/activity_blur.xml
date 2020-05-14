@@ -80,6 +80,7 @@
                     style="@android:style/Widget.ProgressBar.Horizontal"
                     android:layout_width="181dp"
                     android:layout_height="10dp"
+                    android:indeterminateBehavior="repeat"
                     android:outlineAmbientShadowColor="@android:color/holo_red_dark"
                     android:outlineSpotShadowColor="@android:color/holo_blue_light"
                     android:layout_gravity="center_horizontal"

@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.workmanagerdemo.databinding.ActivitySelectImageBinding;
+
 import java.util.Arrays;
 import java.util.List;
 
@@ -35,11 +37,13 @@ public class SelectImageActivity extends AppCompatActivity {
     );
 
     private int mPermissionRequestCount;
+    private ActivitySelectImageBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_select_image);
+        binding = ActivitySelectImageBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         if (savedInstanceState != null) {
             mPermissionRequestCount =
@@ -50,7 +54,7 @@ public class SelectImageActivity extends AppCompatActivity {
         requestPermissionsIfNecessary();
 
         // Create request to get image from filesystem when button clicked`
-        findViewById(R.id.selectImage).setOnClickListener( view -> {
+        binding.selectImage.setOnClickListener( view -> {
 
                 Intent chooseIntent = new Intent(
                         Intent.ACTION_PICK,
@@ -133,12 +137,10 @@ public class SelectImageActivity extends AppCompatActivity {
         } else if (data.getData() != null) {
             imageUri = data.getData();
         }
-
         if (imageUri == null) {
             Log.e(TAG, "Invalid input image Uri.");
             return;
         }
-
         Intent filterIntent = new Intent(this, BlurActivity.class);
         filterIntent.putExtra(Constants.KEY_IMAGE_URI, imageUri.toString());
         startActivity(filterIntent);

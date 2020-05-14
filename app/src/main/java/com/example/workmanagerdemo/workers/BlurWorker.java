@@ -21,7 +21,6 @@ import static com.example.workmanagerdemo.Constants.PROGRESS;
 import static com.example.workmanagerdemo.workers.WorkerUtils.sleep;
 
 public class BlurWorker extends Worker {
-
     /**
      * Creates an instance of the {@link Worker}.
      *
@@ -62,10 +61,10 @@ public class BlurWorker extends Worker {
                     Constants.KEY_IMAGE_URI, outputUri.toString()).build();
 
             int i= 0;
-            while (i<100){
+            while (i<101){
 //                setProgressAsync(outputData);
                 setProgressAsync(new Data.Builder().putInt(PROGRESS,i).build());
-//                sleep();
+                sleep();
                 i = i + 10;
             }
             // If there were no errors, return SUCCESS
@@ -80,7 +79,5 @@ public class BlurWorker extends Worker {
             Log.e(TAG, "Error applying blur", throwable);
             return Result.failure();
         }
-
-
     }
 }
