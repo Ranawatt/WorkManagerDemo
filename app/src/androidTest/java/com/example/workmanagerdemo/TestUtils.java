@@ -21,7 +21,7 @@ public class TestUtils {
      * @param filename source asset file
      * @return Uri for temp file
      */
-    public Uri copyFileFromTestToTargetCtx(Context testCtx, Context targetCtx, String filename) throws IOException {
+    public static Uri copyFileFromTestToTargetCtx(Context testCtx, Context targetCtx, String filename) throws IOException {
 
         String destinationFileName = String.format("blur-test-%s.png", UUID.randomUUID().toString());
         File outputDir = new File(targetCtx.getFilesDir(),OUTPUT_PATH);
@@ -45,7 +45,7 @@ public class TestUtils {
      * @param uri for the file
      * @return true if file exist, false if the file does not exist of the Uri is not valid
      */
-    public boolean uriFileExists(Context targetCtx, String uri ){
+    public static boolean uriFileExists(Context targetCtx, String uri ){
         if (uri.isEmpty()){ return false; }
         ContentResolver resolver = targetCtx.getContentResolver();
         try {

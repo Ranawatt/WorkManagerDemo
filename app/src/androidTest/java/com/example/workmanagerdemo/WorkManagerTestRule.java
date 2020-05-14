@@ -34,4 +34,16 @@ public class WorkManagerTestRule extends TestWatcher {
         WorkManagerTestInitHelper.initializeTestWorkManager(targetContext,configuration);
         workManager = WorkManager.getInstance(targetContext);
     }
+
+    public Context getTargetContext() {
+        return targetContext;
+    }
+
+    public Context getTestContext() {
+        return testContext;
+    }
+
+    public WorkManager getWorkManager() {
+        return workManager;
+    }
 }
