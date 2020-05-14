@@ -83,9 +83,9 @@ public class BlurActivity extends AppCompatActivity {
 
             boolean finished = workInfo.getState().isFinished();
             if (!finished) {
-                showWorkInProgress();
-            } else {
                 showWorkFinished();
+            } else {
+                showWorkInProgress();
                 // Normally this processing, which is not directly related to drawing views on
                 // screen would be in the ViewModel. For simplicity we are keeping it here.
                 Data outputData = workInfo.getOutputData();

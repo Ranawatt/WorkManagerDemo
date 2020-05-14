@@ -1,5 +1,6 @@
 package com.example.workmanagerdemo.workers;
 
+import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -15,6 +16,8 @@ import androidx.work.WorkerParameters;
 
 import com.example.workmanagerdemo.Constants;
 import java.io.FileNotFoundException;
+
+import static com.example.workmanagerdemo.Constants.PROGRESS;
 import static com.example.workmanagerdemo.workers.WorkerUtils.sleep;
 
 public class BlurWorker extends Worker {
@@ -31,6 +34,7 @@ public class BlurWorker extends Worker {
 
     private static final String TAG = BlurWorker.class.getSimpleName();
 
+    @SuppressLint("RestrictedApi")
     @NonNull
     @Override
     public Worker.Result doWork() {
@@ -45,27 +49,23 @@ public class BlurWorker extends Worker {
                 Log.e(TAG, "Invalid input uri");
                 throw new IllegalArgumentException("Invalid input uri");
             }
-
             ContentResolver resolver = applicationContext.getContentResolver();
-
             // Create a bitmap
             Bitmap bitmap = BitmapFactory.decodeStream(
                     resolver.openInputStream(Uri.parse(resourceUri)));
-
             // Blur the bitmap
             Bitmap output = WorkerUtils.blurBitmap(bitmap, applicationContext);
-
             // Write bitmap to a temp file
             Uri outputUri = WorkerUtils.writeBitmapToFile(applicationContext, output);
-
             // Return the output for the temp file
             Data outputData = new Data.Builder().putString(
                     Constants.KEY_IMAGE_URI, outputUri.toString()).build();
 
             int i= 0;
             while (i<100){
-                setProgressAsync(outputData);
-                sleep();
+//                setProgressAsync(outputData);
+                setProgressAsync(new Data.Builder().putInt(PROGRESS,i).build());
+//                sleep();
                 i = i + 10;
             }
             // If there were no errors, return SUCCESS

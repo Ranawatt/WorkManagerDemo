@@ -78,11 +78,12 @@
                 <ProgressBar
                     android:id="@+id/progress_bar"
                     style="@android:style/Widget.ProgressBar.Horizontal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
+                    android:layout_width="181dp"
+                    android:layout_height="10dp"
+                    android:outlineAmbientShadowColor="@android:color/holo_red_dark"
+                    android:outlineSpotShadowColor="@android:color/holo_blue_light"
                     android:layout_gravity="center_horizontal"
-                    />
+                    android:visibility="visible" />
             </LinearLayout>
 
             <Button
