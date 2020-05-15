@@ -22,10 +22,7 @@ import static com.example.workmanagerdemo.Constants.PROGRESS;
 
 public class BlurActivity extends AppCompatActivity {
     private BlurViewModel mViewModel;
-
     private ActivityBlurBinding binding;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,9 +118,7 @@ public class BlurActivity extends AppCompatActivity {
      * @return Integer representing the amount of times to blur the image
      */
     private int getBlurLevel() {
-        RadioGroup radioGroup = findViewById(R.id.radio_blur_group);
-
-        switch(radioGroup.getCheckedRadioButtonId()) {
+        switch(binding.radioBlurGroup.getCheckedRadioButtonId()) {
             case R.id.radio_blur_lv_1:
                 return 1;
             case R.id.radio_blur_lv_2:

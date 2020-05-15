@@ -1,6 +1,5 @@
 package com.example.workmanagerdemo.workers;
 
-import android.annotation.SuppressLint;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -23,7 +22,6 @@ import static com.example.workmanagerdemo.workers.WorkerUtils.sleep;
 public class BlurWorker extends Worker {
     /**
      * Creates an instance of the {@link Worker}.
-     *
      * @param appContext   the application {@link Context}
      * @param workerParams the set of {@link WorkerParameters}
      */
@@ -33,7 +31,6 @@ public class BlurWorker extends Worker {
 
     private static final String TAG = BlurWorker.class.getSimpleName();
 
-    @SuppressLint("RestrictedApi")
     @NonNull
     @Override
     public Worker.Result doWork() {
@@ -74,7 +71,6 @@ public class BlurWorker extends Worker {
             throw new RuntimeException("Failed to decode input stream", fileNotFoundException);
 
         } catch (Throwable throwable) {
-
             // If there were errors, return FAILURE
             Log.e(TAG, "Error applying blur", throwable);
             return Result.failure();

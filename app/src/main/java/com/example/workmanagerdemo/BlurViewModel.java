@@ -49,7 +49,6 @@ public class BlurViewModel extends AndroidViewModel {
      * @param blurLevel The amount to blur the image
      */
     void applyBlur(int blurLevel) {
-
         // Add WorkRequest to Cleanup temporary images
         WorkContinuation continuation = mWorkManager
                 .beginUniqueWork(IMAGE_MANIPULATION_WORK_NAME,
@@ -60,7 +59,6 @@ public class BlurViewModel extends AndroidViewModel {
         for (int i = 0; i < blurLevel; i++) {
             OneTimeWorkRequest.Builder blurBuilder =
                     new OneTimeWorkRequest.Builder(BlurWorker.class);
-
             // Input the Uri if this is the first blur operation
             // After the first blur operation the input will be the output of previous
             // blur operations.
@@ -88,14 +86,12 @@ public class BlurViewModel extends AndroidViewModel {
         continuation.enqueue();
 
     }
-
     /**
      * Cancel work using the work's unique name
      */
     void cancelWork() {
         mWorkManager.cancelUniqueWork(IMAGE_MANIPULATION_WORK_NAME);
     }
-
     /**
      * Creates the input data bundle which includes the Uri to operate on
      * @return Data which contains the Image Uri as a String

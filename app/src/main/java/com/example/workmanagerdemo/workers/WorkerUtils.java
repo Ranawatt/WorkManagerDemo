@@ -31,18 +31,15 @@ import static com.example.workmanagerdemo.Constants.DELAY_TIME_MILLIS;
 
 final class WorkerUtils {
     private static final String TAG = WorkerUtils.class.getSimpleName();
-
     /**
      * Create a Notification that is shown as a heads-up notification if possible.
      *
      * this is used to show a notification so that you know when different steps
      * of the background work chain are starting
-     *
      * @param message Message shown on the notification
      * @param context Context needed to create Toast
      */
     static void makeStatusNotification(String message, Context context) {
-
         // Make a channel if necessary
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             // Create the NotificationChannel, but only on API 26+ because
@@ -53,16 +50,13 @@ final class WorkerUtils {
             NotificationChannel channel =
                     new NotificationChannel(CHANNEL_ID, name, importance);
             channel.setDescription(description);
-
             // Add the channel
             NotificationManager notificationManager =
                     (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-
             if (notificationManager != null) {
                 notificationManager.createNotificationChannel(channel);
             }
         }
-
         // Create the notificatiomn
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
@@ -70,11 +64,9 @@ final class WorkerUtils {
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
                 .setVibrate(new long[0]);
-
         // Show the notification
         NotificationManagerCompat.from(context).notify(Constants.NOTIFICATION_ID, builder.build());
     }
-
     /**
      * Method for sleeping for a fixed about of time to emulate slower work
      */
@@ -85,7 +77,6 @@ final class WorkerUtils {
             Log.d(TAG, e.getMessage());
         }
     }
-
     /**
      * Blurs the given Bitmap image
      * @param bitmap Image to blur
@@ -93,16 +84,12 @@ final class WorkerUtils {
      * @return Blurred bitmap image
      */
     @WorkerThread
-    static Bitmap blurBitmap(@NonNull Bitmap bitmap,
-                             @NonNull Context applicationContext) {
-
+    static Bitmap blurBitmap(@NonNull Bitmap bitmap, @NonNull Context applicationContext) {
         RenderScript rsContext = null;
         try {
-
             // Create the output bitmap
             Bitmap output = Bitmap.createBitmap(
                     bitmap.getWidth(), bitmap.getHeight(), bitmap.getConfig());
-
             // Blur the image
             rsContext = RenderScript.create(applicationContext, RenderScript.ContextType.DEBUG);
             Allocation inAlloc = Allocation.createFromBitmap(rsContext, bitmap);
@@ -113,7 +100,6 @@ final class WorkerUtils {
             theIntrinsic.setInput(inAlloc);
             theIntrinsic.forEach(outAlloc);
             outAlloc.copyTo(output);
-
             return output;
         } finally {
             if (rsContext != null) {
@@ -121,7 +107,6 @@ final class WorkerUtils {
             }
         }
     }
-
     /**
      * Writes bitmap to a temporary file and returns the Uri for the file
      * @param applicationContext Application context
@@ -129,8 +114,7 @@ final class WorkerUtils {
      * @return Uri for temp file with bitmap
      * @throws FileNotFoundException Throws if bitmap file cannot be found
      */
-    static Uri writeBitmapToFile(
-            @NonNull Context applicationContext,
+    static Uri writeBitmapToFile(@NonNull Context applicationContext,
             @NonNull Bitmap bitmap) throws FileNotFoundException {
 
         String name = String.format("blur-filter-output-%s.png", UUID.randomUUID().toString());
