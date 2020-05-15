@@ -66,7 +66,7 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="vertical">
                 <Button
                     android:id="@+id/cancel_button"
                     android:layout_width="wrap_content"
@@ -79,7 +79,7 @@
                     android:id="@+id/progress_bar"
                     style="@style/HorizontalProgressBar"
                     android:theme="@style/HorizontalProgressBar"
-                    android:layout_width="181dp"
+                    android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_gravity="center_horizontal"
                     android:visibility="gone" />
