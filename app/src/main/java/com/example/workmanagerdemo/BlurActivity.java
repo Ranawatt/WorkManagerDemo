@@ -112,7 +112,6 @@ public class BlurActivity extends AppCompatActivity {
         binding.cancelButton.setVisibility(View.GONE);
         binding.goButton.setVisibility(View.VISIBLE);
     }
-
     /**
      * Get the blur level from the radio button as an integer
      * @return Integer representing the amount of times to blur the image
